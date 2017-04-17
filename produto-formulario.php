@@ -7,7 +7,7 @@
 	$categoria = new Categoria();
 	$categoria->setId(1);
 
-	$produto = new Produto("", "", "", $categoria, "");
+	$produto = new LivroFisico("", "", "", $categoria, "");
 
 	$categoriaDao = new CategoriaDao($conexao);
 	$categorias = $categoriaDao->listaCategorias();

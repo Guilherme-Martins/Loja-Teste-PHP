@@ -1,6 +1,6 @@
 <?php
 	
-	class Produto {
+	abstract class Produto {
 		private $id;
 		private $nome;
 		private $preco;
@@ -60,9 +60,19 @@
 		    return $this instanceof Livro;
 		}
 
+		public function temTaxaImpressao() {
+		    return $this instanceof LivroFisico;
+		}
+
+		public function temWaterMark() {
+		    return $this instanceof Ebook;
+		}
+
 		public function calculaImposto() {
 		    return $this->preco * 0.195;
 		}
+
+		abstract function atualizaBaseadoEm($params);
 
 	    function __toString() {
 	    	return $this->nome." R$ ".$this->preco;

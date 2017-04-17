@@ -1,29 +1,23 @@
 <?php 
 	require_once("cabecalho.php");                    
 
-	//Instanciação de uma categoria.
-	$categoria = new Categoria();
-	$categoria->setId($_POST['categoria_id']);
-
-	$nome = $_POST["nome"];
-	$preco = $_POST["preco"];
-	$descricao = $_POST["descricao"];
-	$isbn = $_POST['isbn'];
 	$tipoProduto = $_POST['tipoProduto'];
+	$produto_id = $_POST['id'];
+	$categoria_id = $_POST['categoria_id'];
+
+	//Criação de um objeto 'Produto'.
+	$factory = new ProdutoFactory();
+	$produto = $factory->criaPor($tipoProduto, $_POST);
+
+	//Atualização do objeto 'Produto'.
+	$produto->atualizaBaseadoEm($_POST);
+	$produto->setId($produto_id);
+	$produto->getCategoria()->setId($categoria_id);
 	
 	if(array_key_exists('usado', $_POST)) {
-		$usado = "true";
+		$produto->setUsado("true");
 	} else {
-		$usado = "false";
-	}
-
-	if ($tipoProduto == "Livro") {
-		//Instanciação de um livro.
-		$produto = new Livro($nome, $preco, $descricao, $categoria, $usado);		
-		$produto->setIsbn($isbn);
-	} else {
-		//Instanciação de um produto.
-		$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+		$produto->setUsado("false");
 	}
 
 	//Acrescenta o Id do produto para alteração.
